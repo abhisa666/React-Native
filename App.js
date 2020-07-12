@@ -1,16 +1,35 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import Main from './components/MainComponent';
+import { Provider } from 'react-redux';
+import { ConfigureStore } from './redux/configureStore';
+import { PersistGate } from 'redux-persist/es/integration/react'
+import { Loading } from './components/LoadingComponent';
+
+const { persistor, store } = ConfigureStore();
+
 
 export default function App() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Universal React with Expo</Text>
-    </View>
+    // <Provider store={store}>
+    //   <Main />
+    // </Provider>
+    <Provider store={store}>
+        <PersistGate 
+          loading={<Loading />}
+          persistor={persistor}>
+          <Main />
+        </PersistGate>
+    </Provider>
   );
 }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor:'#0ff',
+//     justifyContent: "center",
+//     alignItems: "center"
+
+//   }
+// })
